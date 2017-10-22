@@ -1,5 +1,6 @@
 <html>
 <head>
+    <title>My Climate Change</title>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -8,7 +9,7 @@
     <script src="cooling.js"></script>
 </head><body>
 
-    <p id="credentials">
+    <div id="credentials">
         <h2>Climate API Credentials</h2>
         Enter your email and password for the
         <a href="https://climate.azavea.com">Climate Change API</a>
@@ -17,7 +18,7 @@
             <label for="password">Password</label> <input type="password" id="password">
             <input type="submit">
         </form>
-    </p>
+    </div>
 
     <div id="hot_days" v-if="future_hot_days">
         <h2>Hot Days</h2>
