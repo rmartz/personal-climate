@@ -19,18 +19,24 @@
         </form>
     </p>
 
-    <p id="hot_days" v-if="future_hot_days">
-        In {{ city_name }}, the hottest days in summer typically are around or
-        above {{ current_hot_threshold.toFixed(1) }} {{ units }} - currently,
-        about {{ current_hot_days.toFixed(1) }} days in a year get that hot. In
-        the {{ future_decade }}s, that number is expected to rise to
-        {{ future_hot_days.toFixed(1) }} days per year, on average.
-    </p>
+    <div id="hot_days" v-if="future_hot_days">
+        <h2>Hot Days</h2>
+        <p>
+            In {{ city_name }}, only the hottest days in summer typically get
+            above {{ current_hot_threshold.toFixed(1) }} {{ units }} - currently,
+            about {{ current_hot_days.toFixed(1) }} days in a year get that hot. In
+            the {{ future_decade }}s, that number is expected to rise to
+            {{ future_hot_days.toFixed(1) }} days per year, on average.
+        </p>
+    </div>
 
-    <p id="cooling" v-if="change_ratio">
-        A house kept to {{ basetemp }} {{ units }} in the summer can expect to
-        see cooling costs increase in the {{ future_decade }}s by
-        {{ Math.round(100 * (change_ratio-1)) }}% from increased heat.
-    </p>
+    <div id="cooling" v-if="change_ratio">
+        <h2>Cooling</h2>
+            <p>
+            A house kept to {{ basetemp }} {{ units }} in the summer can expect to
+            see cooling costs increase in the {{ future_decade }}s by
+            {{ Math.round(100 * (change_ratio-1)) }}% from increased heat.
+        </p>
+    </div>
 
 </body></html>
