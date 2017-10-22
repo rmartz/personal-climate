@@ -5,9 +5,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="base.js"></script>
     <script src="hot_days.js"></script>
+    <script src="cooling.js"></script>
 </head><body>
 
-    <p>
+    <p id="credentials">
         <h2>Climate API Credentials</h2>
         Enter your email and password for the
         <a href="https://climate.azavea.com">Climate Change API</a>
@@ -18,12 +19,18 @@
         </form>
     </p>
 
-    <p id="hot_days">
+    <p id="hot_days" v-if="future_hot_days">
         In {{ city_name }}, the hottest days in summer typically are around or
         above {{ current_hot_threshold.toFixed(1) }} {{ units }} - currently,
         about {{ current_hot_days.toFixed(1) }} days in a year get that hot. In
         the {{ future_decade }}s, that number is expected to rise to
         {{ future_hot_days.toFixed(1) }} days per year, on average.
+    </p>
+
+    <p id="cooling" v-if="change_ratio">
+        A house kept to {{ basetemp }} {{ units }} in the summer can expect to
+        see cooling costs increase in the {{ future_decade }}s by
+        {{ Math.round(100 * (change_ratio-1)) }}% from increased heat.
     </p>
 
 </body></html>
