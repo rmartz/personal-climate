@@ -1,4 +1,3 @@
-var api_token = undefined;
 var api_base_url = "https://app.climate.azavea.com/";
 var temperature_unit = 'F'
 
@@ -23,7 +22,6 @@ function get_api_token(input_form) {
 
 function make_api_request(url, params) {
     var myHeaders = new Headers();
-    myHeaders.append('Authorization', 'Token ' + api_token);
 
     var myInit = { method: 'GET',
                    headers: myHeaders,
@@ -36,8 +34,12 @@ function make_api_request(url, params) {
     }
 
     var myRequest = new Request(api_base_url + 'api/' + url + params_string);
-    return fetch(myRequest,myInit).then(function(response) {
-        return response.json();
+
+    return logged_in.then(function(api_token) {
+        myHeaders.append('Authorization', 'Token ' + api_token);
+        return fetch(myRequest,myInit).then(function(response) {
+            return response.json();
+        });
     });
 }
 
@@ -66,19 +68,22 @@ function average_by_decade(response) {
 
 var logged_in = new Promise(function(resolve, reject) {
     window.addEventListener('load', function () {
-        console.log("Window loaded");
+        if(localStorage.token) {
+            console.log("Using saved token");
+            resolve(localStorage.token);
+            return;
+        }
+        // If there isn't a saved token, wait for the user log-in
         $("#login_form").submit(function() {
-            console.log("Login form submitted");
             return get_api_token(this).then(function(response) {
                 console.log(response);
-                api_token = response.token;
+                localStorage.token = response.token;
                 resolve(response.token);
             })
         });
     });
 });
-var city_promise = logged_in.then(function() {
-    return make_api_request('city/nearest/',
+var city_promise = make_api_request('city/nearest/',
         {
             'lat': 39.9526,
             'lon': -75.1652
@@ -89,4 +94,3 @@ var city_promise = logged_in.then(function() {
                 name: city_json.properties.name
             };
         });
-});
