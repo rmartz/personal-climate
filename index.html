@@ -7,12 +7,23 @@
     <script src="hot_days.js"></script>
 </head><body>
 
-    <div id="hot_days">
+    <p>
+        <h2>Climate API Credentials</h2>
+        Enter your email and password for the
+        <a href="https://climate.azavea.com">Climate Change API</a>
+        <form id="login_form" onsubmit="return false;">
+            <label for="email">Email</label> <input type="text" id="email">
+            <label for="password">Password</label> <input type="password" id="password">
+            <input type="submit">
+        </form>
+    </p>
+
+    <p id="hot_days">
         In {{ city_name }}, the hottest days in summer typically are around or
         above {{ current_hot_threshold.toFixed(1) }} {{ units }} - currently,
         about {{ current_hot_days.toFixed(1) }} days in a year get that hot. In
         the {{ future_decade }}s, that number is expected to rise to
         {{ future_hot_days.toFixed(1) }} days per year, on average.
-    </div>
+    </p>
 
 </body></html>

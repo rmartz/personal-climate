@@ -1,14 +1,31 @@
-var api_token = "";
-var api_base_url = "https://app.climate.azavea.com/api/";
+var api_token = undefined;
+var api_base_url = "https://app.climate.azavea.com/";
 var temperature_unit = 'F'
 
-function make_api_request(url, params, method) {
-    method = method || "GET";
+function get_api_token(input_form) {
 
+    var formData = new FormData();
+    formData.append("email", input_form.email.value);
+    formData.append("password", input_form.password.value);
+
+    var myInit = {
+        method: 'POST',
+        body: formData,
+        mode: 'cors',
+        cache: 'default'
+    };
+
+    var myRequest = new Request(api_base_url + 'api-token-auth/');
+    return fetch(myRequest,myInit).then(function(response) {
+        return response.json();
+    });
+}
+
+function make_api_request(url, params) {
     var myHeaders = new Headers();
     myHeaders.append('Authorization', 'Token ' + api_token);
 
-    var myInit = { method: method,
+    var myInit = { method: 'GET',
                    headers: myHeaders,
                    mode: 'cors',
                    cache: 'default' };
@@ -18,7 +35,7 @@ function make_api_request(url, params, method) {
         params_string = '?' + $.param(params);
     }
 
-    var myRequest = new Request(api_base_url + url + params_string);
+    var myRequest = new Request(api_base_url + 'api/' + url + params_string);
     return fetch(myRequest,myInit).then(function(response) {
         return response.json();
     });
@@ -47,10 +64,21 @@ function average_by_decade(response) {
     return data;
 }
 
-var city_promise;
-
-window.addEventListener('load', function () {
-    city_promise = make_api_request('city/nearest/',
+var logged_in = new Promise(function(resolve, reject) {
+    window.addEventListener('load', function () {
+        console.log("Window loaded");
+        $("#login_form").submit(function() {
+            console.log("Login form submitted");
+            return get_api_token(this).then(function(response) {
+                console.log(response);
+                api_token = response.token;
+                resolve(response.token);
+            })
+        });
+    });
+});
+var city_promise = logged_in.then(function() {
+    return make_api_request('city/nearest/',
         {
             'lat': 39.9526,
             'lon': -75.1652
