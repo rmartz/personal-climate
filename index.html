@@ -1,0 +1,17 @@
+<html>
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="source.js"></script>
+</head><body>
+
+    <div id="app">
+        In {{ city_name }}, the hottest days in summer typically are around or
+        above {{ current_hot_threshold.toFixed(1) }} {{ units }} - currently,
+        about {{ current_hot_days.toFixed(1) }} days in a year get that hot. In
+        the {{ future_decade }}s, that number is expected to rise to
+        {{ future_hot_days.toFixed(1) }} days per year, on average.
+    </div>
+
+</body></html>
