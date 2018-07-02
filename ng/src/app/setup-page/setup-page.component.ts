@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ConnectionBackend, Headers, Http, Request, RequestOptions, RequestOptionsArgs,
     Response, URLSearchParams } from '@angular/http';
+import { ApiHttp } from '../shared/services/api-http.service'
 
 @Component({
   selector: 'app-setup-page',
@@ -12,20 +13,11 @@ export class SetupPageComponent {
   public tokenValid: Boolean;
   public nearestCities: Array<any> = [];
 
-  constructor(protected http: Http) { }
-
-  private makeApiRequest(path) {
-    const options = new RequestOptions();
-    options.headers = new Headers();
-    options.headers.set('Authorization', 'Token ' + this.token);
-    options.headers.set('Accept', 'application/json');
-
-    const url = 'https://app.climate.azavea.com' + path;
-    return this.http.get(url, options)
-  }
+  constructor(protected apiHttp: ApiHttp) { }
 
   public verifyApiToken() {
-    this.makeApiRequest('/api/dataset/').subscribe(() => {
+    this.apiHttp.setToken(this.token);
+    this.apiHttp.request('/api/dataset/').subscribe(() => {
         this.tokenValid = true;
     });
   }
@@ -35,8 +27,8 @@ export class SetupPageComponent {
     navigator.geolocation.getCurrentPosition(position => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
-      const url = `/api/city/nearest?lat=${lat}&lon=${lon}&limit=5`
-      this.makeApiRequest(url).subscribe(response => {
+      const path = `/api/city/nearest?lat=${lat}&lon=${lon}&limit=5`
+      this.apiHttp.request(path).subscribe(response => {
         this.nearestCities = response.json().features.map(city => {
           return {
             'id': city.id,

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-router.module';
 import { SetupPageComponent } from './setup-page/setup-page.component';
+import { ApiHttp } from './shared/services/api-http.service'
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { SetupPageComponent } from './setup-page/setup-page.component';
     RouterModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [ApiHttp],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
