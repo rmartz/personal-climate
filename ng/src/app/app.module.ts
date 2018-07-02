@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-router.module';
 import { SetupPageComponent } from './setup-page/setup-page.component';
 import { ApiHttp } from './shared/services/api-http.service'
+import { CurrentCity } from './shared/services/current-city.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,10 @@ import { ApiHttp } from './shared/services/api-http.service'
     RouterModule,
     AppRoutingModule
   ],
-  providers: [ApiHttp],
+  providers: [
+    ApiHttp,
+    CurrentCity
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

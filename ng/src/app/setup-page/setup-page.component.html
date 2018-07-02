@@ -30,12 +30,19 @@
 
 <p *ngIf="nearestCities?.length > 0">
   <span *ngIf="nearestCities?.length === 1">
-      Found {{ nearestCities.length }} city:
+    Found {{ nearestCities.length }} city:
   </span>
   <span *ngIf="nearestCities?.length > 1">
     Found {{ nearestCities.length }} cities:
   </span>
-  <select>
-      <option *ngFor="let city of nearestCities" value="city.id">{{city.name}}, {{city.state}}</option>
+  <select [(ngModel)]="selectedCity">
+    <option *ngFor="let city of nearestCities" [ngValue]="city">
+      {{city.name}}, {{city.state}}
+    </option>
   </select>
+</p>
+<p>
+  <button [disabled]="!selectedCity || !tokenValid" (click)="save()">
+    Save
+  </button>
 </p>
