@@ -4,6 +4,7 @@
     The Climate Change API has climate projection data for hundreds of cities around the U.S., this will find the one closest to you.
 </p>
 <button
+  [disabled]="!(apiHttp.currentTokenValid() | async)"
   (click)="findNearestCities()">
   Find Nearest Cities
 </button>

@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { first } from 'rxjs/operators';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { merge } from 'rxjs/observable/merge';
 import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
@@ -29,6 +28,15 @@ export class ApiHttp {
 
   public currentToken(): Observable<string> {
     return this.tokenObserver.asObservable();
+  }
+
+  public currentTokenValid(): Observable<boolean> {
+    return this.currentToken().pipe(map(token => token !== undefined));
+  }
+
+  public logout() {
+    localStorage.removeItem('token');
+    this.tokenObserver.next(undefined);
   }
 
   public request(path: string): Observable<Response> {
