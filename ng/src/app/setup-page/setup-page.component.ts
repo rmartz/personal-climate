@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ConnectionBackend, Headers, Http, Request, RequestOptions, RequestOptionsArgs,
-    Response, URLSearchParams } from '@angular/http';
 import { City } from '../shared/models/city.model'
 import { ApiHttp } from '../shared/services/api-http.service'
 import { CurrentCity } from '../shared/services/current-city.service'
