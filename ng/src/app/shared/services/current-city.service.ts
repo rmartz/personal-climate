@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { filter } from 'rxjs/operators';
 
 import { City } from '../models/city.model'
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CurrentCity {
@@ -10,8 +12,10 @@ export class CurrentCity {
 
   constructor() { }
 
-  public getCurrent() {
-    return this.cityObserver.asObservable()
+  public getCurrent(): Observable<City> {
+    return this.cityObserver.asObservable().pipe(filter(city => {
+      return city !== undefined;
+    }));
   }
 
   public setCity(city: City) {
