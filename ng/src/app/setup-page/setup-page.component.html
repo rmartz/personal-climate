@@ -1,48 +1,5 @@
 <h1>Setup</h1>
 
-<h2>API Token</h2>
-<p>
-    This uses the Azavea Climate Change API, which requires a free account to obtain an API token. You only need to <a href="https://climate.azavea.com/">sign up for a free account</a> and then visit the <a href="https://app.climate.azavea.com/accounts/api/">API account page</a> to copy-and-paste your API token here:
-</p>
+<app-token-config></app-token-config>
 
-<input
-    type="text"
-    placeholder="API token"
-    [(ngModel)]="token"
-    (change)="tokenValid = false;">
-<button (click)="verifyApiToken()">Check</button>
-<span style="color: green;" *ngIf="tokenValid">&#x2713;</span>
-
-<h2>Find Your City</h2>
-
-<p>
-    The Climate Change API has climate projection data for hundreds of cities around the U.S., this will find the one closest to you.
-</p>
-<button
-  [disabled]="!tokenValid"
-  (click)="findNearestCities()">
-  Find Nearest Cities
-</button>
-
-<p *ngIf="nearestCities === undefined">
-  Loading...
-</p>
-
-<p *ngIf="nearestCities?.length > 0">
-  <span *ngIf="nearestCities?.length === 1">
-    Found {{ nearestCities.length }} city:
-  </span>
-  <span *ngIf="nearestCities?.length > 1">
-    Found {{ nearestCities.length }} cities:
-  </span>
-  <select [(ngModel)]="selectedCity">
-    <option *ngFor="let city of nearestCities" [ngValue]="city">
-      {{city.name}}, {{city.state}}
-    </option>
-  </select>
-</p>
-<p>
-  <button [disabled]="!selectedCity || !tokenValid" (click)="save()">
-    Save
-  </button>
-</p>
+<app-city-config></app-city-config>

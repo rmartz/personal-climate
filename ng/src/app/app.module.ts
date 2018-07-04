@@ -11,11 +11,15 @@ import { CoolingInfoComponent } from 'app/cooling-info/cooling-info.component';
 import { ApiHttp } from './shared/services/api-http.service'
 import { ClimateData } from './shared/services/climate-data.service';
 import { CurrentCity } from './shared/services/current-city.service';
+import { TokenConfigComponent } from './token-config/token-config.component';
+import { CityConfigComponent } from './city-config/city-config.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SetupPageComponent,
+    TokenConfigComponent,
+    CityConfigComponent,
     CoolingInfoComponent
   ],
   imports: [

@@ -1,0 +1,32 @@
+<h2>Find Your City</h2>
+
+<p>
+    The Climate Change API has climate projection data for hundreds of cities around the U.S., this will find the one closest to you.
+</p>
+<button
+  (click)="findNearestCities()">
+  Find Nearest Cities
+</button>
+
+<p *ngIf="nearestCities === undefined">
+  Loading...
+</p>
+
+<p *ngIf="nearestCities?.length > 0">
+  <span *ngIf="nearestCities?.length === 1">
+    Found {{ nearestCities.length }} city:
+  </span>
+  <span *ngIf="nearestCities?.length > 1">
+    Found {{ nearestCities.length }} cities:
+  </span>
+  <select [(ngModel)]="selectedCity">
+    <option *ngFor="let city of nearestCities" [ngValue]="city">
+      {{city.name}}, {{city.state}}
+    </option>
+  </select>
+</p>
+<p>
+  <button [disabled]="!selectedCity" (click)="save()">
+    Save
+  </button>
+</p>
