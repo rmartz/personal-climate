@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { City } from '../shared/models/city.model'
 import { ApiHttp } from '../shared/services/api-http.service'
 import { CurrentCity } from '../shared/services/current-city.service'
@@ -7,9 +7,9 @@ import { CurrentCity } from '../shared/services/current-city.service'
   selector: 'app-setup-page',
   templateUrl: './setup-page.component.html'
 })
-export class SetupPageComponent {
+export class SetupPageComponent implements OnInit {
 
-  public token: String = ""
+  public token: string = ""
   public tokenValid: Boolean;
   public nearestCities: Array<any> = [];
   public selectedCity: City;
@@ -48,5 +48,12 @@ export class SetupPageComponent {
 
   public save() {
     this.currentCity.setCity(this.selectedCity);
+  }
+
+  public ngOnInit() {
+    this.token = this.apiHttp.getToken();
+    if(this.token !== undefined) {
+      this.tokenValid = true;
+    }
   }
 }

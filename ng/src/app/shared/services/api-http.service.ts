@@ -5,11 +5,13 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ApiHttp {
 
-  public token: String
+  public token: string
 
-  constructor(protected http: Http) { }
+  constructor(protected http: Http) {
+    this.token = localStorage.getItem('token');
+  }
 
-  public request(path: String): Observable<Response> {
+  public request(path: string): Observable<Response> {
     const options = new RequestOptions();
     options.headers = new Headers();
     options.headers.set('Authorization', 'Token ' + this.token);
@@ -19,7 +21,12 @@ export class ApiHttp {
     return this.http.get(url, options)
   }
 
-  public setToken(token: String) {
+  public getToken(): string {
+    return this.token;
+  }
+
+  public setToken(token: string) {
+    localStorage.setItem('token', token);
     this.token = token;
   }
 }
