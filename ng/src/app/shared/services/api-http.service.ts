@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/first';
+import { mergeMap, first, filter } from 'rxjs/operators';
 
 
 @Injectable()
@@ -41,9 +41,11 @@ export class ApiHttp {
   }
 
   public request(path: string): Observable<Response> {
-    return this.currentToken().flatMap(token => {
-      return this.rawRequest(path, token);
-    }).first();
+    return this.currentToken().pipe(
+      filter(token => token !== undefined),
+      first(),
+      mergeMap<string, Response>(token => this.rawRequest(path, token))
+    );
   }
 
   private testTokenValidity(token: string): Observable<boolean> {

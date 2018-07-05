@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiHttp } from './api-http.service';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/filter';
+import { Response } from '@angular/http';
+import { filter, switchMap } from 'rxjs/operators';
 
 
 import { CurrentCity } from './current-city.service'
+import { City } from '../models/city.model';
 
 @Injectable()
 export class ClimateData {
@@ -15,12 +16,13 @@ export class ClimateData {
   public get_indicator_data(indicator_name, params) {
     const scenario = 'RCP85';
 
-    return this.currentCity.getCurrent().filter(city => {
+    return this.currentCity.getCurrent().pipe(
       // Don't send requests when we don't have a city configured
-      return city !== undefined;
-    }).mergeMap(city => {
-      const path = `/api/climate-data/${city.id}/${scenario}/indicator/${indicator_name}/`
-      return this.apiHttp.request(path);
-    });
+      filter(city => city !== undefined),
+      switchMap<City, Response>(city => {
+        const path = `/api/climate-data/${city.id}/${scenario}/indicator/${indicator_name}/`
+        return this.apiHttp.request(path);
+      })
+    );
   }
 }
