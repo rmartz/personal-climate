@@ -1,10 +1,22 @@
-import { Injectable, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SetupPageComponent } from './setup-page/setup-page.component';
+import { CoolingInfoComponent } from './cooling-info/cooling-info.component';
+import { ValidTokenGuard } from './core/guards/valid-token.service';
+import { ConfiguredCityGuard } from './core/guards/configured-city.service';
 
 const routes: Routes = [
-  { path: '**', component: SetupPageComponent }
+  { path: 'settings',
+    component: SetupPageComponent
+  },
+  { path: '',
+    component: CoolingInfoComponent,
+    canActivate: [ValidTokenGuard, ConfiguredCityGuard],
+  },
+  { path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({

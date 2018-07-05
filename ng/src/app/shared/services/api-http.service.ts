@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { first } from 'rxjs/operators';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { map, switchMap } from 'rxjs/operators';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/first';
+
 
 @Injectable()
 export class ApiHttp {
@@ -31,7 +32,7 @@ export class ApiHttp {
   }
 
   public currentTokenValid(): Observable<boolean> {
-    return this.currentToken().pipe(map(token => token !== undefined));
+    return this.currentToken().map(token => token !== undefined);
   }
 
   public logout() {
@@ -42,14 +43,14 @@ export class ApiHttp {
   public request(path: string): Observable<Response> {
     return this.currentToken().flatMap(token => {
       return this.rawRequest(path, token);
-    }).pipe(first());
+    }).first();
   }
 
   private testTokenValidity(token: string): Observable<boolean> {
     const path = '/api/dataset/';
-    return this.rawRequest(path, token).pipe(map(() => {
+    return this.rawRequest(path, token).map(() => {
       return true;
-    }));
+    });
   }
 
   public setToken(token: string) {

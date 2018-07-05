@@ -13,6 +13,8 @@ import { ClimateData } from './shared/services/climate-data.service';
 import { CurrentCity } from './shared/services/current-city.service';
 import { TokenConfigComponent } from './token-config/token-config.component';
 import { CityConfigComponent } from './city-config/city-config.component';
+import { ValidTokenGuard } from './core/guards/valid-token.service';
+import { ConfiguredCityGuard } from './core/guards/configured-city.service';
 
 @NgModule({
   declarations: [
@@ -31,8 +33,10 @@ import { CityConfigComponent } from './city-config/city-config.component';
   ],
   providers: [
     ApiHttp,
+    ValidTokenGuard,
     CurrentCity,
-    ClimateData
+    ClimateData,
+    ConfiguredCityGuard
   ],
   bootstrap: [AppComponent]
 })
