@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { City } from '../shared/models/city.model';
 import { ClimateData } from '../shared/services/climate-data.service';
 
 @Component({
