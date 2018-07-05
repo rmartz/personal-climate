@@ -1,5 +1,5 @@
-import { Injectable }     from '@angular/core';
-import { CanActivate, Router }    from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 
 import { ApiHttp } from '../../shared/services/api-http.service';
