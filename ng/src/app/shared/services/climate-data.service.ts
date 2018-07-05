@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiHttp } from './api-http.service';
 import { Response } from '@angular/http';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, map } from 'rxjs/operators';
 
-
-import { CurrentCity } from './current-city.service'
+import { CurrentCity } from './current-city.service';
 import { City } from '../models/city.model';
+import { IndicatorData } from '../models/indicator-data.model';
 
 @Injectable()
 export class ClimateData {
@@ -22,7 +22,8 @@ export class ClimateData {
       switchMap<City, Response>(city => {
         const path = `/api/climate-data/${city.id}/${scenario}/indicator/${indicator_name}/`
         return this.apiHttp.request(path);
-      })
+      }),
+      map(IndicatorData.fromApi)
     );
   }
 }
