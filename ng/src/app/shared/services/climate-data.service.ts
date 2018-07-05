@@ -20,7 +20,7 @@ export class ClimateData {
       // Don't send requests when we don't have a city configured
       filter(city => city !== undefined),
       switchMap<City, Response>(city => {
-        const path = `/api/climate-data/${city.id}/${scenario}/indicator/${indicator_name}/`
+        const path = `/api/climate-data/${city.id}/${scenario}/indicator/${indicator_name}/`;
         return this.apiHttp.request(path);
       }),
       map(IndicatorData.fromApi)
