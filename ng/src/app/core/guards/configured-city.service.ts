@@ -14,7 +14,7 @@ export class ConfiguredCityGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.currentCity.currentCityValid().pipe(
       map(valid => {
-        if(!valid) {
+        if (!valid) {
           this.router.navigate(['/settings/']);
         }
         return valid;
