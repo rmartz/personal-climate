@@ -7,12 +7,11 @@ import { mergeMap, first, filter, map } from 'rxjs/operators';
 @Injectable()
 export class ApiHttp {
 
-  protected tokenObserver = new BehaviorSubject<string>(undefined);
+  protected tokenObserver: BehaviorSubject<string>;
 
   constructor(protected http: Http) {
     const savedToken = localStorage.getItem('token');
-    // Use setToken so we verify the token works before notifying subscribers
-    this.setToken(savedToken);
+    this.tokenObserver = new BehaviorSubject<string>(savedToken);
   }
 
   private objectToParams(params: {}) {
