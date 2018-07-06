@@ -7,8 +7,8 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-router.module';
 import { SetupPageComponent } from './setup-page/setup-page.component';
-import { CoolingInfoComponent } from 'app/cooling-info/cooling-info.component';
-import { ApiHttp } from './shared/services/api-http.service'
+import { CoolingInfoComponent } from './cooling-info/cooling-info.component';
+import { ApiHttp } from './shared/services/api-http.service';
 import { ClimateData } from './shared/services/climate-data.service';
 import { CurrentCity } from './shared/services/current-city.service';
 import { TokenConfigComponent } from './token-config/token-config.component';

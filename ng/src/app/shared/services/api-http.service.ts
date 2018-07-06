@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import { mergeMap, first, filter } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { mergeMap, first, filter, map } from 'rxjs/operators';
 
 
 @Injectable()
@@ -32,7 +30,9 @@ export class ApiHttp {
   }
 
   public currentTokenValid(): Observable<boolean> {
-    return this.currentToken().map(token => token !== undefined);
+    return this.currentToken().pipe(
+      map(token => token !== undefined)
+    );
   }
 
   public logout() {
@@ -50,9 +50,9 @@ export class ApiHttp {
 
   private testTokenValidity(token: string): Observable<boolean> {
     const path = '/api/dataset/';
-    return this.rawRequest(path, token).map(() => {
-      return true;
-    });
+    return this.rawRequest(path, token).pipe(
+      map(() => true)
+    );
   }
 
   public setToken(token: string) {
