@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-router.module';
 import { SetupPageComponent } from './setup-page/setup-page.component';
 import { CoolingInfoComponent } from './cooling-info/cooling-info.component';
+import { HotDaysComponent } from './hot-days/hot-days.component';
+import { InfoPageComponent } from './info-page/info-page.component';
 import { ApiHttp } from './shared/services/api-http.service';
 import { ClimateData } from './shared/services/climate-data.service';
 import { CurrentCity } from './shared/services/current-city.service';
@@ -22,7 +24,9 @@ import { ConfiguredCityGuard } from './core/guards/configured-city.service';
     SetupPageComponent,
     TokenConfigComponent,
     CityConfigComponent,
-    CoolingInfoComponent
+    CoolingInfoComponent,
+    HotDaysComponent,
+    InfoPageComponent
   ],
   imports: [
     BrowserModule,

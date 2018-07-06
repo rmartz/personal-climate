@@ -21,7 +21,7 @@ export class ClimateData {
       filter(city => city !== undefined),
       switchMap<City, Response>(city => {
         const path = `/api/climate-data/${city.id}/${scenario}/indicator/${indicator_name}/`;
-        return this.apiHttp.request(path);
+        return this.apiHttp.request(path, params);
       }),
       map(IndicatorData.fromApi)
     );

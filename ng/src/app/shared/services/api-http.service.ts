@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, RequestOptions } from '@angular/http';
+import { Headers, Http, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { mergeMap, first, filter, map } from 'rxjs/operators';
 
@@ -15,8 +15,20 @@ export class ApiHttp {
     this.setToken(savedToken);
   }
 
-  private rawRequest(path: string, token: string): Observable<Response> {
+  private objectToParams(params: {}) {
+    const result = new URLSearchParams();
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        const val = params[key];
+        result.set(key, val);
+      }
+    }
+    return result;
+  }
+
+  private rawRequest(path: string, token: string, params?: {}): Observable<Response> {
     const options = new RequestOptions();
+    options.params = this.objectToParams(params);
     options.headers = new Headers();
     options.headers.set('Authorization', 'Token ' + token);
     options.headers.set('Accept', 'application/json');
@@ -40,11 +52,11 @@ export class ApiHttp {
     this.tokenObserver.next(undefined);
   }
 
-  public request(path: string): Observable<Response> {
+  public request(path: string, params?: {}): Observable<Response> {
     return this.currentToken().pipe(
       filter(token => token !== undefined),
       first(),
-      mergeMap<string, Response>(token => this.rawRequest(path, token))
+      mergeMap<string, Response>(token => this.rawRequest(path, token, params))
     );
   }
 
