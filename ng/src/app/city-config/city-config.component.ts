@@ -21,8 +21,12 @@ export class CityConfigComponent {
     navigator.geolocation.getCurrentPosition(position => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
-      const path = `/api/city/nearest/?lat=${lat}&lon=${lon}&limit=5`;
-      this.apiHttp.request(path).subscribe(response => {
+      const path = '/api/city/nearest/';
+      this.apiHttp.request(path, {
+        lat: lat,
+        lon: lon,
+        limit: 5
+      }).subscribe(response => {
         this.nearestCities = response.json().features.map(City.fromApi);
         this.selectedCity = this.nearestCities[0];
       });
