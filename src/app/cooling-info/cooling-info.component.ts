@@ -10,7 +10,7 @@ export class CoolingInfoComponent implements OnInit {
 
   protected basetemp = 74;
   protected basetempUnits = 'F';
-  protected cdd: IndicatorData;
+  public cdd: IndicatorData;
 
   constructor(protected climateData: ClimateData) { }
 

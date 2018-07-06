@@ -12,8 +12,8 @@ export class CityConfigComponent {
   public nearestCities: Array<any> = [];
   public selectedCity: City;
 
-  constructor(protected apiHttp: ApiHttp,
-              protected currentCity: CurrentCity) { }
+  constructor(public apiHttp: ApiHttp,
+              public currentCity: CurrentCity) { }
 
   public findNearestCities() {
     this.nearestCities = undefined;

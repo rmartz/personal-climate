@@ -9,10 +9,10 @@ import { IndicatorData } from '../shared/models/indicator-data.model';
 })
 export class HotDaysComponent implements OnInit {
 
-  protected hottest_n = 10;
-  protected static_percentile: IndicatorData;
-  protected current_threshold: IndicatorData;
-  protected future_threshold: IndicatorData;
+  public hottest_n = 10;
+  public static_percentile: IndicatorData;
+  public current_threshold: IndicatorData;
+  public future_threshold: IndicatorData;
 
   constructor(protected climateData: ClimateData) { }
 
