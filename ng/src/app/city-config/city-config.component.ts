@@ -23,15 +23,7 @@ export class CityConfigComponent {
       const lon = position.coords.longitude;
       const path = `/api/city/nearest/?lat=${lat}&lon=${lon}&limit=5`;
       this.apiHttp.request(path).subscribe(response => {
-        this.nearestCities = response.json().features.map(apiCity => {
-          const city = new City();
-          Object.assign(city, {
-            'id': apiCity.id,
-            'name': apiCity.properties.name,
-            'state': apiCity.properties.admin
-          });
-          return city;
-        });
+        this.nearestCities = response.json().features.map(City.fromApi);
         this.selectedCity = this.nearestCities[0];
       });
     });
