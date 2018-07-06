@@ -3,7 +3,7 @@ node_js:
 - node
 branches:
   only:
-  - master
+  - develop
 before_script:
 - npm install -g @angular/cli
 script:
