@@ -22,7 +22,7 @@ export class ApiHttp {
     options.headers.set('Accept', 'application/json');
 
     const url = 'https://app.climate.azavea.com' + path;
-    return this.http.get(url, options)
+    return this.http.get(url, options);
   }
 
   public currentToken(): Observable<string> {
@@ -59,6 +59,6 @@ export class ApiHttp {
     this.testTokenValidity(token).subscribe(valid => {
       localStorage.setItem('token', token);
       this.tokenObserver.next(token);
-    })
+    });
   }
 }

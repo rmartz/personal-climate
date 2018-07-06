@@ -13,7 +13,7 @@ export class ValidTokenGuard implements CanActivate {
   canActivate() {
     return this.apiHttp.currentTokenValid().pipe(
       map(valid => {
-        if(!valid) {
+        if (!valid) {
           this.router.navigate(['/settings/']);
         }
         return valid;
