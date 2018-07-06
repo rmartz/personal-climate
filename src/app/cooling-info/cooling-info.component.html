@@ -1,0 +1,5 @@
+<p *ngIf="cdd">
+  A house kept to {{ basetemp }} {{ basetempUnits }} in the summer can expect to
+  see cooling costs increase in the {{ cdd.future_era }}s by
+  {{ 100 * (cdd.future / cdd.current - 1) | number : '1.0-0' }}% from increased heat.
+</p>

@@ -1,0 +1,16 @@
+<h2>API Token</h2>
+<p *ngIf="!(apiHttp.currentTokenValid() | async)">
+    * required
+  </p>
+
+<p>
+    This uses the Azavea Climate Change API, which requires a free account to obtain an API token. You only need to <a href="https://climate.azavea.com/">sign up for a free account</a> and then visit the <a href="https://app.climate.azavea.com/accounts/api/">API account page</a> to copy-and-paste your API token here:
+</p>
+
+<input
+    type="text"
+    placeholder="API token"
+    [(ngModel)]="token"
+    (change)="tokenValid = false;">
+<button (click)="saveToken()">Check</button>
+<span style="color: green;" *ngIf="tokenValid">&#x2713;</span>
