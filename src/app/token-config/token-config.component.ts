@@ -8,7 +8,6 @@ import { ApiHttp } from '../shared/services/api-http.service'
 export class TokenConfigComponent implements OnInit {
 
   public token: string;
-  public tokenValid: Boolean;
 
   constructor(public apiHttp: ApiHttp) { }
 
@@ -19,9 +18,6 @@ export class TokenConfigComponent implements OnInit {
   public ngOnInit() {
     this.apiHttp.currentToken().subscribe(token => {
       this.token = token;
-      if (token !== undefined) {
-        this.tokenValid = true;
-      }
     });
   }
 }

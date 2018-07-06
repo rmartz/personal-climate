@@ -42,18 +42,18 @@ export class ApiHttp {
 
   public currentTokenValid(): Observable<boolean> {
     return this.currentToken().pipe(
-      map(token => token !== undefined)
+      map(token => token !==  null)
     );
   }
 
   public logout() {
     localStorage.removeItem('token');
-    this.tokenObserver.next(undefined);
+    this.tokenObserver.next(null);
   }
 
   public request(path: string, params?: {}): Observable<Response> {
     return this.currentToken().pipe(
-      filter(token => token !== undefined),
+      filter(token => token !== null),
       first(),
       mergeMap<string, Response>(token => this.rawRequest(path, token, params))
     );
