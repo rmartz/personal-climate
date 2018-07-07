@@ -4,8 +4,6 @@ node_js:
 branches:
   only:
   - develop
-addons:
-  chrome: stable
 cache:
   directories:
     - node_modules
@@ -13,9 +11,7 @@ before_script:
 - npm install -g @angular/cli
 script:
 - ng lint
-- ng test:headless
 - ng build --prod
-- xvfb-run ng e2e
 deploy:
   provider: s3
   access_key_id:
