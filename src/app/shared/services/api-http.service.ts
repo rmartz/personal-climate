@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, RequestOptions, URLSearchParams } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { mergeMap, first, filter, map } from 'rxjs/operators';
 
@@ -9,31 +9,33 @@ export class ApiHttp {
 
   protected tokenObserver: BehaviorSubject<string>;
 
-  constructor(protected http: Http) {
+  constructor(protected http: HttpClient) {
     const savedToken = localStorage.getItem('token');
     this.tokenObserver = new BehaviorSubject<string>(savedToken);
   }
 
-  private objectToParams(params: {}) {
-    const result = new URLSearchParams();
+  private objectToParams(params: {}): HttpParams {
+    let result = new HttpParams();
     for (const key in params) {
       if (params.hasOwnProperty(key)) {
         const val = params[key];
-        result.set(key, val);
+        result = result.append(key, val);
       }
     }
     return result;
   }
 
-  private rawRequest(path: string, token: string, params?: {}): Observable<Response> {
-    const options = new RequestOptions();
-    options.params = this.objectToParams(params);
-    options.headers = new Headers();
-    options.headers.set('Authorization', 'Token ' + token);
-    options.headers.set('Accept', 'application/json');
+  private rawRequest<T>(path: string, token: string, params?: {}): Observable<T> {
+    const options = {
+      params: this.objectToParams(params),
+      headers: new HttpHeaders({
+        'Authorization': `Token ${token}`,
+        'Accept': 'application/json'
+      })
+    };
 
     const url = 'https://app.climate.azavea.com' + path;
-    return this.http.get(url, options);
+    return this.http.get<T>(url, options);
   }
 
   public currentToken(): Observable<string> {
@@ -51,17 +53,17 @@ export class ApiHttp {
     this.tokenObserver.next(null);
   }
 
-  public request(path: string, params?: {}): Observable<Response> {
+  public request<T>(path: string, params?: {}): Observable<T> {
     return this.currentToken().pipe(
       filter(token => token !== null),
       first(),
-      mergeMap<string, Response>(token => this.rawRequest(path, token, params))
+      mergeMap<string, T>(token => this.rawRequest<T>(path, token, params))
     );
   }
 
   private testTokenValidity(token: string): Observable<boolean> {
     const path = '/api/dataset/';
-    return this.rawRequest(path, token).pipe(
+    return this.rawRequest<Object>(path, token).pipe(
       map(() => true)
     );
   }

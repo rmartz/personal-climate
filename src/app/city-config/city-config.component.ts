@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { City } from '../shared/models/city.model';
+import { City, ApiCityResponse } from '../shared/models/city.model';
 import { ApiHttp } from '../shared/services/api-http.service';
 import { CurrentCity } from '../shared/services/current-city.service';
 
@@ -22,12 +22,12 @@ export class CityConfigComponent {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
       const path = '/api/city/nearest/';
-      this.apiHttp.request(path, {
+      this.apiHttp.request<ApiCityResponse>(path, {
         lat: lat,
         lon: lon,
         limit: 5
       }).subscribe(response => {
-        this.nearestCities = response.json().features.map(City.fromApi);
+        this.nearestCities = response.features.map(City.fromApi);
         this.selectedCity = this.nearestCities[0];
       });
     });

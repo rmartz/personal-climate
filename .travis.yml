@@ -4,9 +4,13 @@ node_js:
 branches:
   only:
   - develop
+cache:
+  directories:
+    - node_modules
 before_script:
 - npm install -g @angular/cli
 script:
+- ng lint
 - ng build --prod
 deploy:
   provider: s3
