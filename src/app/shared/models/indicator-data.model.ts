@@ -5,7 +5,7 @@ class ApiIndicatorResponse {
   units: string;
 
   static fromApi(response: Response): ApiIndicatorResponse {
-    const data = new ApiIndicatorResponse()
+    const data = new ApiIndicatorResponse();
     Object.assign(data, response.json());
     return data;
   }

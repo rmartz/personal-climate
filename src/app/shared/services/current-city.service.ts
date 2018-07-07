@@ -10,7 +10,7 @@ export class CurrentCity {
   cityObserver: BehaviorSubject<City>;
 
   constructor() {
-    let city: City = undefined;
+    let city: City;
     const json = localStorage.getItem('city');
     if (json !== undefined) {
       city = JSON.parse(json);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiHttp } from '../shared/services/api-http.service'
+import { ApiHttp } from '../shared/services/api-http.service';
 
 @Component({
   selector: 'app-token-config',
