@@ -1,14 +1,6 @@
-import { Response } from '@angular/http';
-
-class ApiIndicatorResponse {
+export class ApiIndicatorResponse {
   data: { [year: string]: {avg: number} };
   units: string;
-
-  static fromApi(response: Response): ApiIndicatorResponse {
-    const data = new ApiIndicatorResponse();
-    Object.assign(data, response.json());
-    return data;
-  }
 }
 
 export class IndicatorData {
@@ -20,13 +12,11 @@ export class IndicatorData {
   future: number;
   units: string;
 
-  static fromApi(response: Response): IndicatorData {
-    const raw = ApiIndicatorResponse.fromApi(response);
-
+  static fromApi(apiResponse: ApiIndicatorResponse): IndicatorData {
     const result = new IndicatorData();
-    result.current = result.average_era(raw, result.current_era, result.era_length);
-    result.future = result.average_era(raw, result.future_era, result.era_length);
-    result.units = raw.units;
+    result.current = result.average_era(apiResponse, result.current_era, result.era_length);
+    result.future = result.average_era(apiResponse, result.future_era, result.era_length);
+    result.units = apiResponse.units;
     return result;
   }
 
