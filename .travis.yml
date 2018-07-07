@@ -8,6 +8,9 @@ before_script:
 - npm install -g @angular/cli
 script:
 - ng build --prod
+- ng test
+- ng e2e
+- ng lint
 deploy:
   provider: s3
   access_key_id:
