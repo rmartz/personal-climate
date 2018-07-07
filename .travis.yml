@@ -4,7 +4,6 @@ node_js:
 branches:
   only:
   - develop
-  - master
 before_script:
 - npm install -g @angular/cli
 script:
@@ -18,7 +17,9 @@ deploy:
   bucket: climate.reedmartz.com
   skip_cleanup: true
   local_dir: dist/climate
+  on:
+    branch: develop
 notifications:
   email:
     on_failure: change
-    on_success: change
+    on_success: always
