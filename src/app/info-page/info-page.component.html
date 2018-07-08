@@ -10,7 +10,7 @@
 <app-city-config></app-city-config>
 
 <div *ngIf="(currentCity.getCurrent() | async) as city;">
-  <h2>Climate Change For {{city.name}}</h2>
+  <h2>Climate Change For {{city.name}}, {{city.state}}</h2>
   <app-cooling-info></app-cooling-info>
 
   <app-hot-days></app-hot-days>
