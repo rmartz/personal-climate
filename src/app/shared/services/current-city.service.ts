@@ -7,16 +7,9 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class CurrentCity {
 
-  cityObserver: BehaviorSubject<City>;
+  cityObserver = new BehaviorSubject<City>(undefined);
 
-  constructor() {
-    let city: City;
-    const json = localStorage.getItem('city');
-    if (json !== undefined) {
-      city = JSON.parse(json);
-    }
-    this.cityObserver = new BehaviorSubject<City>(city);
-  }
+  constructor() { }
 
   public getCurrent(): Observable<City> {
     return this.cityObserver.asObservable();
@@ -29,7 +22,6 @@ export class CurrentCity {
   }
 
   public setCity(city: City) {
-    localStorage.setItem('city', JSON.stringify(city));
     this.cityObserver.next(city);
   }
 }
