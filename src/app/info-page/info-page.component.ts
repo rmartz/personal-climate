@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CurrentCity } from '../shared/services/current-city.service';
 
 @Component({
   selector: 'app-info-page',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class InfoPageComponent {
 
-  constructor() { }
+  constructor(public currentCity: CurrentCity) { }
 }

@@ -1,3 +1,12 @@
-<app-cooling-info></app-cooling-info>
+<h1>Setup</h1>
 
-<app-hot-days></app-hot-days>
+<app-token-config></app-token-config>
+
+<app-city-config></app-city-config>
+
+<div *ngIf="(currentCity.getCurrent() | async) as city;">
+  <h1>Climate Change For {{city.name}}</h1>
+  <app-cooling-info></app-cooling-info>
+
+  <app-hot-days></app-hot-days>
+</div>
