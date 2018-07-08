@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
-import { mergeMap, delay, first, filter, map, retryWhen, take } from 'rxjs/operators';
+import { mergeMap, switchMap, catchError, delay, filter, map, retryWhen, take } from 'rxjs/operators';
 
 
 @Injectable()
@@ -69,14 +69,20 @@ export class ApiHttp {
 
   public request<T>(path: string, params?: {}): Observable<T> {
     return this.currentToken().pipe(
+      // Don't send a request until the user is authenticated
       filter(token => token !== null),
-      first(),
-      mergeMap<string, HttpResponse<T>>(token => this.rawRequest<T>(path, token, params)),
+      switchMap<string, HttpResponse<T>>(token => this.rawRequest<T>(path, token, params)),
+      catchError<HttpResponse<T>, HttpResponse<T>>(response => {
+        // If we get a 401 error, clear our API token so the user will be prompted to enter it again
+        if (response.status === 401) {
+          this.logout();
+        }
+        return of(response);
+      }),
       map(response => {
         // Calling function wants to get back a T, not HttpResponse<T>
         return response.body;
       })
-
     );
   }
 
