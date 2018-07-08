@@ -46,8 +46,4 @@ export class CityConfigComponent implements OnInit {
       });
     });
   }
-
-  public save() {
-    this.currentCity.setCity(this.selectedCity);
-  }
 }
