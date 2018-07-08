@@ -12,6 +12,7 @@ import { HotDaysComponent } from './hot-days/hot-days.component';
 import { InfoPageComponent } from './info-page/info-page.component';
 import { ApiHttp } from './shared/services/api-http.service';
 import { ClimateData } from './shared/services/climate-data.service';
+import { CityData } from './shared/services/city-data.service';
 import { CurrentCity } from './shared/services/current-city.service';
 import { TokenConfigComponent } from './token-config/token-config.component';
 import { CityConfigComponent } from './city-config/city-config.component';
@@ -40,6 +41,7 @@ import { ConfiguredCityGuard } from './core/guards/configured-city.service';
     ValidTokenGuard,
     CurrentCity,
     ClimateData,
+    CityData,
     ConfiguredCityGuard
   ],
   bootstrap: [AppComponent]

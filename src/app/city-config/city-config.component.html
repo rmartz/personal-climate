@@ -9,25 +9,33 @@
 <p *ngIf="(currentCity.getCurrent() | async) as city;">
   Showing {{city.name}}, {{city.state}}
 </p>
+<input
+  type="text"
+  placeholder="Search for city"
+  #citySearch>
+- or -
 <button
   [disabled]="!(apiHttp.currentTokenValid() | async)"
   (click)="findNearestCities()">
-  Find Nearest Cities
+  Find Cities Near You
 </button>
 
-<p *ngIf="nearestCities === undefined">
+
+<p *ngIf="citySuggestions === null">
   Loading...
 </p>
-
-<p *ngIf="nearestCities?.length > 0">
-  <span *ngIf="nearestCities?.length === 1">
-    Found {{ nearestCities.length }} city:
+<p *ngIf="citySuggestions?.length === 0">
+    No results found
+</p>
+<p *ngIf="citySuggestions?.length > 0">
+  <span *ngIf="citySuggestions?.length === 1">
+    Found {{ citySuggestions.length }} city:
   </span>
-  <span *ngIf="nearestCities?.length > 1">
-    Found {{ nearestCities.length }} cities:
+  <span *ngIf="citySuggestions?.length > 1">
+    Found {{ citySuggestions.length }} cities:
   </span>
-  <select [(ngModel)]="selectedCity">
-    <option *ngFor="let city of nearestCities" [ngValue]="city">
+  <select [(ngModel)]="selectedCity" size=5>
+    <option *ngFor="let city of citySuggestions" [ngValue]="city">
       {{city.name}}, {{city.state}}
     </option>
   </select>
