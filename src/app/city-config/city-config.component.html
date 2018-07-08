@@ -34,6 +34,7 @@
   <span *ngIf="citySuggestions?.length > 1">
     Found {{ citySuggestions.length }} cities:
   </span>
+  <br />
   <select [(ngModel)]="selectedCity" size=5>
     <option *ngFor="let city of citySuggestions" [ngValue]="city">
       {{city.name}}, {{city.state}}
