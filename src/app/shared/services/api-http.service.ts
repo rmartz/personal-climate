@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { mergeMap, first, filter, map } from 'rxjs/operators';
+import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
+import { mergeMap, delay, first, filter, map, retryWhen, take } from 'rxjs/operators';
 
 
 @Injectable()
@@ -25,17 +25,31 @@ export class ApiHttp {
     return result;
   }
 
-  private rawRequest<T>(path: string, token: string, params?: {}): Observable<T> {
-    const options = {
+  private rawRequest<T>(path: string, token: string, params?: {}): Observable<HttpResponse<T>> {
+    const url = 'https://app.climate.azavea.com' + path;
+    return this.http.get<T>(url, {
       params: this.objectToParams(params),
       headers: new HttpHeaders({
         'Authorization': `Token ${token}`,
         'Accept': 'application/json'
-      })
-    };
-
-    const url = 'https://app.climate.azavea.com' + path;
-    return this.http.get<T>(url, options);
+      }),
+      observe: 'response'
+    }).pipe(
+      // Automatically retry throttling failures
+      retryWhen(error => {
+        return error.pipe(
+          mergeMap<HttpResponse<T>, HttpResponse<T>>((response: HttpResponse<T>) => {
+              if (response.status  === 429) {
+                const wait = response.headers['Retry-After'];
+                // 429 means we're being throttled, wait 10s and retry
+                return of(response).pipe(delay(+wait * 1000));
+              }
+              return throwError(response);
+          }),
+          take(5)
+        );
+      }),
+    );
   }
 
   public currentToken(): Observable<string> {
@@ -57,7 +71,12 @@ export class ApiHttp {
     return this.currentToken().pipe(
       filter(token => token !== null),
       first(),
-      mergeMap<string, T>(token => this.rawRequest<T>(path, token, params))
+      mergeMap<string, HttpResponse<T>>(token => this.rawRequest<T>(path, token, params)),
+      map(response => {
+        // Calling function wants to get back a T, not HttpResponse<T>
+        return response.body;
+      })
+
     );
   }
 
