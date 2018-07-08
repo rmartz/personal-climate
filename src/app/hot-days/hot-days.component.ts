@@ -50,7 +50,7 @@ export class HotDaysComponent implements OnInit {
               });
             }),
             tap(response => {
-              this.current_threshold = response;
+              this.future_threshold = response;
             })
           ),
           // Number of days that currently exceed the projected future Top N temperature
@@ -63,7 +63,7 @@ export class HotDaysComponent implements OnInit {
               });
             }),
             tap(response => {
-              this.future_threshold = response;
+              this.current_threshold = response;
             })
           ),
         );
