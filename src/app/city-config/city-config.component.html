@@ -32,7 +32,10 @@
     Found {{ citySuggestions.length }} cities:
   </span>
   <br />
-  <select [(ngModel)]="selectedCity" (change)="currentCity.setCity(this.selectedCity)" size=5>
+  <select
+    [(ngModel)]="selectedCity"
+    (change)="currentCity.setCity(this.selectedCity)"
+    size=5>
     <option *ngFor="let city of citySuggestions" [ngValue]="city">
       {{city.name}}, {{city.state}}
     </option>

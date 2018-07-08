@@ -36,13 +36,11 @@ export class CityConfigComponent implements OnInit {
 
   public findNearestCities() {
     this.citySuggestions = null;
-    this.selectedCity = undefined;
     navigator.geolocation.getCurrentPosition(position => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
       this.cityData.nearestCities(lat, lon).subscribe(response => {
         this.citySuggestions = response.features.map(City.fromApi);
-        this.selectedCity = this.citySuggestions[0];
       });
     });
   }
