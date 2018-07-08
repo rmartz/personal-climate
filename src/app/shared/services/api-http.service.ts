@@ -41,7 +41,7 @@ export class ApiHttp {
           mergeMap<HttpResponse<T>, HttpResponse<T>>((response: HttpResponse<T>) => {
               if (response.status  === 429) {
                 const wait = response.headers['Retry-After'];
-                // 429 means we're being throttled, wait 10s and retry
+                // 429 means we're being throttled, wait and retry
                 return of(response).pipe(delay(+wait * 1000));
               }
               return throwError(response);
