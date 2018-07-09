@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiHttp } from './api-http.service';
-import { filter, switchMap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { CurrentCity } from './current-city.service';
 import { City } from '../models/city.model';
