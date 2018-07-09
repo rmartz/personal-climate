@@ -1,0 +1,3 @@
+<p *ngIf="high && low">
+  In the {{ high.future_era }}s, the whole-year average temperature is expected to rise by {{ (((high.future - high.current) + (low.future - low.current)) / 2) | number : '1.0-1' }} &deg;{{ high.units }}.
+</p>
