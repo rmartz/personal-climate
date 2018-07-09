@@ -12,7 +12,8 @@ export class ConfiguredCityGuard implements CanActivate {
               protected currentCity: CurrentCity) { }
 
   canActivate(): Observable<boolean> {
-    return this.currentCity.currentCityValid().pipe(
+    return this.currentCity.getCurrent().pipe(
+      map(city => city !== undefined),
       map(valid => {
         if (!valid) {
           this.router.navigate(['/settings/']);

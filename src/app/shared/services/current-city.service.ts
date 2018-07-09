@@ -15,12 +15,6 @@ export class CurrentCity {
     return this.cityObserver.asObservable();
   }
 
-  public currentCityValid(): Observable<boolean> {
-    return this.getCurrent().pipe(
-      map(city => city !== undefined)
-    );
-  }
-
   public setCity(city: City) {
     this.cityObserver.next(city);
   }
