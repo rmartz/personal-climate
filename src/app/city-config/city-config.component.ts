@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { fromEvent } from 'rxjs';
-import { map, debounceTime, switchMap, tap } from 'rxjs/operators';
+import { map, debounceTime, switchMap, tap, filter } from 'rxjs/operators';
 
 import { City } from '../shared/models/city.model';
 import { ApiHttp } from '../shared/services/api-http.service';
@@ -25,8 +25,16 @@ export class CityConfigComponent implements OnInit {
     fromEvent(this.citySearch.nativeElement, 'keyup').pipe(
       map<any, string>(event => event.target.value),
       debounceTime(500),
-      tap(() => {
-        this.citySuggestions = null;
+      filter(value => {
+        if (value.length > 1) {
+          // User entered at least 2 characters, show Loading placeholder
+          this.citySuggestions = null;
+          return true;
+        } else {
+          // Otherwise clear the results and show nothing
+          this.citySuggestions = undefined;
+          return false;
+        }
       }),
       switchMap(value => this.cityData.searchByName(value))
     ).subscribe(response => {
