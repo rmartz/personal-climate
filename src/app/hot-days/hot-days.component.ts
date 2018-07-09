@@ -12,7 +12,7 @@ import { CurrentCity } from '../shared/services/current-city.service';
 })
 export class HotDaysComponent implements OnInit {
 
-  public hottest_n = 10;
+  public hottest_n = 7;
   public static_percentile: IndicatorData;
   public current_threshold: IndicatorData;
   public future_threshold: IndicatorData;
