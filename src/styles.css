@@ -134,3 +134,27 @@ td {
   padding-top: 0.2rem;
   border-top: 1px solid #ccc;
 }
+
+.indicator-block {
+  border: 1px solid #ddd;
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+  margin-bottom: 0;
+}
+
+.button-tabs {
+  margin-left: 1rem;
+  text-align: right;
+}
+
+.button-tabs button {
+  background-color: #aaa;
+}
+
+.button-tabs button:focus{
+  outline: none;
+}
+
+.button-tabs button.selected {
+  background-color: #ccc;
+}

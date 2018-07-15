@@ -1,4 +1,4 @@
-<p>
+<p class="indicator-block">
   <span *ngIf="loaded(); else loading">
     <span *ngIf="show_content">
       <ng-content></ng-content>
@@ -34,13 +34,15 @@
     Loading...
   </ng-template>
 </p>
-<button
-  *ngIf="show_content"
-  (click)="show_content = false">
-  Data
-</button>
-<button
-  *ngIf="!show_content"
-  (click)="show_content = true">
-  Return
-</button>
+<div class="button-tabs">
+    <button
+    [ngClass]="{'selected': show_content}"
+    (click)="show_content = false">
+    #
+  </button>
+  <button
+    [ngClass]="{'selected': !show_content}"
+    (click)="show_content = true">
+    aA
+  </button>
+</div>
