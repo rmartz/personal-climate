@@ -19,6 +19,7 @@ import { CityConfigComponent } from './city-config/city-config.component';
 import { ValidTokenGuard } from './core/guards/valid-token.service';
 import { ConfiguredCityGuard } from './core/guards/configured-city.service';
 import { AverageTempComponent } from './average-temp/average-temp.component';
+import { IndicatorBlockComponent } from './indicator-block/indicator-block.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AverageTempComponent } from './average-temp/average-temp.component';
     CoolingInfoComponent,
     HotDaysComponent,
     AverageTempComponent,
-    InfoPageComponent
+    InfoPageComponent,
+    IndicatorBlockComponent
   ],
   imports: [
     BrowserModule,

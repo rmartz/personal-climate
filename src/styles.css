@@ -123,3 +123,14 @@ li {
   list-style: none;
   width: 16rem;
 }
+
+th, td {
+  text-align: left;
+  padding-right: 0.3rem;
+}
+
+td {
+  margin-top: 0.2rem;
+  padding-top: 0.2rem;
+  border-top: 1px solid #ccc;
+}

@@ -1,0 +1,44 @@
+<p>
+  <span *ngIf="loaded(); else loading">
+    <span *ngIf="show_content">
+      <ng-content></ng-content>
+    </span>
+    <span *ngIf="!show_content">
+      <table>
+        <th>
+          Indicator
+        </th>
+        <th>
+          Current average
+        </th>
+        <th>
+          Future average
+        </th>
+        <tr *ngFor="let indicator of indicators">
+          <td>
+            {{ indicator.label }}
+          </td>
+          <td>
+            {{ indicator.current | number : '1.0-1' }}
+          </td>
+          <td>
+            {{ indicator.future | number : '1.0-1' }}
+          </td>
+        </tr>
+      </table>
+    </span>
+  </span>
+  <ng-template #loading>
+    Loading...
+  </ng-template>
+</p>
+<button
+  *ngIf="show_content"
+  (click)="show_content = false">
+  Data
+</button>
+<button
+  *ngIf="!show_content"
+  (click)="show_content = true">
+  Return
+</button>
