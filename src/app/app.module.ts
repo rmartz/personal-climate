@@ -20,6 +20,7 @@ import { ValidTokenGuard } from './core/guards/valid-token.service';
 import { ConfiguredCityGuard } from './core/guards/configured-city.service';
 import { AverageTempComponent } from './average-temp/average-temp.component';
 import { IndicatorBlockComponent } from './indicator-block/indicator-block.component';
+import { KebabCasePipe } from './shared/pipes/kebab-case.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { IndicatorBlockComponent } from './indicator-block/indicator-block.compo
     HotDaysComponent,
     AverageTempComponent,
     InfoPageComponent,
-    IndicatorBlockComponent
+    IndicatorBlockComponent,
+    KebabCasePipe
   ],
   imports: [
     BrowserModule,

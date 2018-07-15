@@ -16,7 +16,9 @@
         </th>
         <tr *ngFor="let indicator of indicators">
           <td>
-            {{ indicator.label }}
+            <a href="https://docs.climate.azavea.com/indicators.html#{{ indicator.name | kebab }}">
+              {{ indicator.label }}
+            </a>
           </td>
           <td>
             {{ indicator.current | number : '1.0-1' }}
