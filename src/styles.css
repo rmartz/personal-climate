@@ -2,9 +2,20 @@
 I have to confess you really shouldn't hire me just on account of my amazing CSS coding talent
 */
 
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
+  position: relative;
   margin: 0;
-  padding: 0;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 80%;
   background-color: #eee;
@@ -17,10 +28,30 @@ body {
   font-size: 1.5rem;
 }
 
-.content {
-  display: inline-block;
-  padding: 3rem 3rem 2.5rem 2.5rem;
+.pillar {
   text-align: initial;
+}
+
+.content {
+  position: relative;
+  padding: 3rem 3rem 2.5rem 2.5rem;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  height: 3rem;
+  background-color: #333;
+  width: 100%;
+  padding-top: 1rem;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgb(255, 171, 87);
+}
+
+.footer ul {
+  justify-content: center;
 }
 
 @media (min-width: 60rem) {
@@ -30,33 +61,47 @@ body {
       background-color: #444;
   }
 
-  .content {
+  .pillar {
       background-color: #eee;
       max-width: 45rem;
       min-height: 100vh;
+      padding: 0 0 3rem 0;
       margin-left: auto;
       margin-right: auto;
       border-left: 0.1rem solid #111;
       border-right: 0.1rem solid #111;
       box-shadow: 0 0 1.3rem rgba(0.2, 0.2, 0.2, 0.8);
   }
+
+  .footer {
+    max-width: 45rem;
+  }
 }
 
-a:link {
+a:link, a:visited {
   color: #a51;
   font-weight: bold;
 }
 
-a:visited {
-  color: #a51;
+.footer a:link, .footer a:visited {
+  color: #f81;
+  font-weight: bold;
 }
 
 a:hover {
   color: #f81;
 }
 
+.footer a:hover {
+  color: #fa5;
+}
+
 a:active {
   color: #fa5;
+}
+
+.footer a:active {
+  color: #fb7;
 }
 
 h1 {
@@ -72,10 +117,9 @@ ul {
   flex-direction: row;
   flex-wrap: wrap;
   padding: 0;
-  margin: 0 0 0 2rem;
+  margin: 0;
 }
 li {
   list-style: none;
-  width: 8rem;
-  margin-bottom: 1rem;
+  width: 16rem;
 }
