@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-router.module';
-import { SetupPageComponent } from './setup-page/setup-page.component';
 import { CoolingInfoComponent } from './cooling-info/cooling-info.component';
 import { HotDaysComponent } from './hot-days/hot-days.component';
 import { InfoPageComponent } from './info-page/info-page.component';
@@ -25,7 +24,6 @@ import { KebabCasePipe } from './shared/pipes/kebab-case.pipe';
 @NgModule({
   declarations: [
     AppComponent,
-    SetupPageComponent,
     TokenConfigComponent,
     CityConfigComponent,
     CoolingInfoComponent,
