@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { map, debounceTime, switchMap, tap, filter } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { fromEvent, Subscription } from 'rxjs';
+import { map, debounceTime, switchMap, first, filter } from 'rxjs/operators';
 
 import { City } from '../shared/models/city.model';
 import { ApiHttp } from '../shared/services/api-http.service';
@@ -11,7 +11,8 @@ import { CityData } from '../shared/services/city-data.service';
   selector: 'app-city-config',
   templateUrl: './city-config.component.html'
 })
-export class CityConfigComponent implements OnInit {
+export class CityConfigComponent implements OnInit, OnDestroy {
+  private _subscription: Subscription;
 
   public citySuggestions: Array<City>;
   public selectedCity: City;
@@ -22,7 +23,7 @@ export class CityConfigComponent implements OnInit {
               public cityData: CityData) { }
 
   ngOnInit() {
-    fromEvent(this.citySearch.nativeElement, 'keyup').pipe(
+    this._subscription = fromEvent(this.citySearch.nativeElement, 'keyup').pipe(
       map<any, string>(event => event.target.value),
       debounceTime(500),
       filter(value => {
@@ -47,9 +48,16 @@ export class CityConfigComponent implements OnInit {
     navigator.geolocation.getCurrentPosition(position => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
-      this.cityData.nearestCities(lat, lon).subscribe(response => {
+      this.cityData.nearestCities(lat, lon).pipe(
+        // Pipe through first() to avoid needing to explicitly unsubscribe
+        first()
+      ).subscribe(response => {
         this.citySuggestions = response.features.map(City.fromApi);
       });
     });
+  }
+
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
   }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { switchMap, filter, tap } from 'rxjs/operators';
 import { ClimateData } from '../shared/services/climate-data.service';
 import { IndicatorData } from '../shared/models/indicator-data.model';
@@ -10,7 +10,8 @@ import { CurrentCity } from '../shared/services/current-city.service';
   selector: 'app-hot-days',
   templateUrl: './hot-days.component.html'
 })
-export class HotDaysComponent implements OnInit {
+export class HotDaysComponent implements OnInit, OnDestroy {
+  private _subscription: Subscription;
 
   public hottest_n = 7;
   public static_percentile: IndicatorData;
@@ -21,7 +22,7 @@ export class HotDaysComponent implements OnInit {
               protected climateData: ClimateData) { }
 
   ngOnInit() {
-    const subscription = this.currentCity.getCurrent().pipe(
+    this._subscription = this.currentCity.getCurrent().pipe(
       tap(() => {
         this.static_percentile = undefined;
         this.current_threshold = undefined;
@@ -64,5 +65,9 @@ export class HotDaysComponent implements OnInit {
         );
       })
     ).subscribe();
+  }
+
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
   }
 }

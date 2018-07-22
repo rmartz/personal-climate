@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiHttp } from '../shared/services/api-http.service';
+import { Subscription } from '../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-token-config',
   templateUrl: './token-config.component.html'
 })
-export class TokenConfigComponent implements OnInit {
+export class TokenConfigComponent implements OnInit, OnDestroy {
+  private _subscription: Subscription;
 
   public token: string;
 
@@ -19,5 +21,9 @@ export class TokenConfigComponent implements OnInit {
     this.apiHttp.currentToken().subscribe(token => {
       this.token = token;
     });
+  }
+
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
-import { mergeMap, switchMap, catchError, delay, filter, map, retryWhen, take } from 'rxjs/operators';
+import { mergeMap, switchMap, catchError, delay, filter, map, retryWhen, take, first } from 'rxjs/operators';
 
 
 @Injectable()
@@ -94,7 +94,10 @@ export class ApiHttp {
   }
 
   public setToken(token: string) {
-    this.testTokenValidity(token).subscribe(valid => {
+    this.testTokenValidity(token).pipe(
+      // Pipe through first() to avoid needing to explicitly unsubscribe
+      first()
+    ).subscribe(valid => {
       localStorage.setItem('token', token);
       this.tokenObserver.next(token);
     });

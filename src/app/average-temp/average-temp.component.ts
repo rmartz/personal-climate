@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { zip } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { zip, Subscription } from 'rxjs';
 import { ClimateData } from '../shared/services/climate-data.service';
 import { CurrentCity } from '../shared/services/current-city.service';
 import { switchMap, tap } from 'rxjs/operators';
@@ -10,7 +10,8 @@ import { City } from '../shared/models/city.model';
   selector: 'app-average-temp',
   templateUrl: './average-temp.component.html'
 })
-export class AverageTempComponent implements OnInit {
+export class AverageTempComponent implements OnInit, OnDestroy {
+  private _subscription: Subscription;
 
   public high: IndicatorData;
   public low: IndicatorData;
@@ -19,7 +20,7 @@ export class AverageTempComponent implements OnInit {
               protected climateData: ClimateData) { }
 
   ngOnInit() {
-    this.currentCity.getCurrent().pipe(
+    this._subscription = this.currentCity.getCurrent().pipe(
       tap(() => {
         this.high = undefined;
         this.low = undefined;
@@ -34,5 +35,9 @@ export class AverageTempComponent implements OnInit {
       this.high = results[0];
       this.low = results[1];
     });
+  }
+
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
   }
 }

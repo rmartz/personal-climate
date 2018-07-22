@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { switchMap, tap, filter } from 'rxjs/operators';
 import { ClimateData } from '../shared/services/climate-data.service';
 import { CurrentCity } from '../shared/services/current-city.service';
 import { City } from '../shared/models/city.model';
 import { IndicatorData } from '../shared/models/indicator-data.model';
+import { Subscription } from '../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-cooling-info',
   templateUrl: './cooling-info.component.html'
 })
-export class CoolingInfoComponent implements OnInit {
+export class CoolingInfoComponent implements OnInit, OnDestroy {
+  private _subscription: Subscription;
 
   protected basetemp = 74;
   protected basetempUnits = 'F';
@@ -19,7 +21,7 @@ export class CoolingInfoComponent implements OnInit {
               protected climateData: ClimateData) { }
 
   ngOnInit() {
-    this.currentCity.getCurrent().pipe(
+    this._subscription = this.currentCity.getCurrent().pipe(
       tap(() => {
         this.cdd = undefined;
       }),
@@ -34,5 +36,9 @@ export class CoolingInfoComponent implements OnInit {
       this.cdd = response;
       console.log(response);
     });
+  }
+
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
   }
 }
