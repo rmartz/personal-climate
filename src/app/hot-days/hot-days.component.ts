@@ -29,7 +29,7 @@ export class HotDaysComponent implements OnInit, OnDestroy {
         this.future_threshold = undefined;
       }),
       filter(city => city !== undefined),
-      switchMap<City, Observable<IndicatorData[]>>(city => {
+      switchMap<City, IndicatorData[]>(city => {
         // We need to store the percentile observer, since the two threshold indicators depend on
         // its value below
         return this.climateData.get_indicator_data(city, 'percentile_high_temperature', {
@@ -38,7 +38,7 @@ export class HotDaysComponent implements OnInit, OnDestroy {
             tap(response => {
               this.static_percentile = response;
             }),
-            switchMap<IndicatorData, IndicatorData>(percentile => {
+            switchMap<IndicatorData, IndicatorData[]>(percentile => {
               return combineLatest(
                 // Number of days that will exceed the current Top N temperature
                 this.climateData.get_indicator_data(city, 'max_temperature_threshold', {
