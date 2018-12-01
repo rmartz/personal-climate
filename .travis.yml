@@ -19,6 +19,7 @@ deploy:
   secret_access_key:
     secure: O+rBO1oaZZmyp/Q6MrtJzc3cvYSKfPnVZaGzFI20izAZyNbZQgHUN7l+0hj1n3//887H/vrk/X250p3k/NrAT4DwJNsaTAs+wIOcVFKVXMr9FwNWG9AP3ERn/eFko5KHLFRi7Uz8z9WlkqA5/qHON9S0+JZhLXeGPIyKhMHzYZVpZ4r1wnqk4iLnJEAI6TvL6e+gwt7M2emWarAWsHxtQ8GdqDnzRCkQxKhRgNjtp6aaz25pL5sfpFgtilTD73gtBGqYD08BRoWRKuyUXPDzWP/KPaz3z67iY9jdTkAIXaeGF4sCXGQP7aln5viuA/iapb0ALyT1Hd3FTPT2xNWJVRSBf1mK7qSziBvTJFVKrwtRzu2tTH4zbR5ZxGTPXB9MZaGcuE3s+phFrKnR24pa46GjnHBirC80JVNkIlI60PS1ccLFoxKGL654n5kDqnXcoOS98Bep8bIuclr2nwOgaVNuT/mZfC6zHiRSZ/cxkZeGImSwHydXFP11iKs9fHuYtQA+iDSDlHQxpKT9L+nXP/z6FwNUOQfZNcOZM7860j1P0Gqyy9Vaspx9pEqCcr77gubOZ/JAIRr7t2MIKxjlKWqWVTT6DbBcHMV57hNKQdX4fdFB7JUKQCZcTw6o8zcg3HyPnNu386ttjcNiTlXjo//NW4Xdfp/52PXzWOuei3s=
   bucket: climate.reedmartz.com
+  cache_control: "max-age=86400"
   skip_cleanup: true
   local_dir: dist/climate
   on:
